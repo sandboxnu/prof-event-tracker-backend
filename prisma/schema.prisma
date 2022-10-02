@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://sandbox:chongus@localhost:5432/fat?schema=public"
+}
+
+model User {
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  first_name     String
+  last_name      String
+  preferred_name String
+  title          String
+  role           Role           @default(FACULTY)
+  ProfessorInfo  ProfessorInfo?
+  Activity       Activity[]
+  Narrative      Narrative[]
+}
+
+model ProfessorInfo {
+  id                         Int              @id @default(autoincrement())
+  user                       User             @relation(fields: [userId], references: [id])
+  userId                     Int              @unique
+  position                   String
+  teachingPercent            Float
+  researchPercent            Float
+  servicePercent             Float
+  sabbatical                 SabbaticalOption
+  teachingReleaseExplanation String
+}
+
+model AcademicYear {
+  id        Int         @id @default(autoincrement())
+  startDate DateTime
+  endDate   DateTime
+  Activity  Activity[]
+  Narrative Narrative[]
+}
+
+model Activity {
+  id             Int               @id @default(autoincrement())
+  user           User              @relation(fields: [userId], references: [id])
+  userId         Int
+  academicYear   AcademicYear      @relation(fields: [academicYearId], references: [id])
+  academicYearId Int
+  date           DateTime
+  name           String
+  description    String
+  category       ActivityCategory
+  significance   SignificanceLevel
+  isFavorite     Boolean
+}
+
+model Narrative {
+  id             Int               @id @default(autoincrement())
+  user           User              @relation(fields: [userId], references: [id])
+  userId         Int
+  academicYear   AcademicYear      @relation(fields: [academicYearId], references: [id])
+  academicYearId Int
+  category       NarrativeCategory
+  text           String
+}
+
+enum Role {
+  FACULTY
+  MERIT_COMMITTEE_MEMBER
+  MERIT_COMMITTEE_HEAD
+  DEAN
+}
+
+enum SabbaticalOption {
+  NO
+  SEMESTER
+  YEAR
+}
+
+enum NarrativeCategory {
+  SUMMARY
+  SERVICE
+  RESEARCH
+  TEACHING
+}
+
+enum ActivityCategory {
+  SERVICE
+  RESEARCH
+  TEACHING
+}
+
+enum SignificanceLevel {
+  MAJOR
+  SIGNIFICANT
+  MINOR
+}
