@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id             Int            @id @default(autoincrement())
-  email          String         @unique
-  first_name     String
-  last_name      String
-  preferred_name String?
-  role           Role           @default(FACULTY)
-  ProfessorInfo  ProfessorInfo?
-  Activity       Activity[]
-  Narrative      Narrative[]
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  firstName     String
+  lastName      String
+  preferredName String?
+  role          Role           @default(FACULTY)
+  ProfessorInfo ProfessorInfo?
+  Activity      Activity[]
+  Narrative     Narrative[]
 }
 
 model ProfessorInfo {
