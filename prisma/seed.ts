@@ -64,7 +64,7 @@ async function main() {
         where: {email: "a3@b.com"},
         update: {},
         create: {
-            email: "a2@b.com",
+            email: "a3@b.com",
             firstName: "Roger",
             lastName: "Wow",
             preferredName: "Rob",
@@ -88,7 +88,7 @@ async function main() {
         where: {email: "a5@b.com"},
         update: {},
         create: {
-            email: "a4@b.com",
+            email: "a5@b.com",
             firstName: "Diego",
             lastName: "Hernandez",
             role: "MERIT_COMMITTEE_MEMBER"
