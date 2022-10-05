@@ -56,7 +56,8 @@ async function main() {
         create: {
             email: "a2@b.com",
             firstName: "Bob",
-            lastName: "Patel", 
+            lastName: "Patel",
+            role: "DEAN"
         }
     })
 
@@ -99,7 +100,7 @@ async function main() {
         where: {email: "a6@b.com"},
         update: {},
         create: {
-            email: "a6@bb.com",
+            email: "a6@b.com",
             firstName: "Ben",
             lastName: "Lerner",
             preferredName: "Blerner",
@@ -145,7 +146,7 @@ async function main() {
 
 
 
-    console.log({ user1, user2, user3, user4, user5, user6, user7 })
+    console.log({ user1, user2, user3, user4, user5, user6, user7, user8, user9 })
     
 }
 
