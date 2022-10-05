@@ -20,11 +20,11 @@ export class AppController {
     .then(e => console.log(e))
   }
 
-  // @Get("test/getAllUsers")
-  // getAllUsers() {
-  //   // write using a Nest service, just there for testing now
-  //   return prisma.user.findMany()
-  // }
+  @Get("test/getAllUsers")
+  getAllUsers() {
+    // write using a Nest service, just there for testing now
+    return prisma.user.findMany()
+  }
 
 
 
