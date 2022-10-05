@@ -23,7 +23,7 @@ export class AppController {
         last_name: "Lerner",
         preferred_name: "blerner",
         title: "Mr.",
-        role: "FACULTY"
+        role: ""
         } 
     })
 
