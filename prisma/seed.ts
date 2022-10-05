@@ -34,20 +34,118 @@ const prisma = new PrismaClient();
 //   console.log({ post1, post2 });
 // }
 
-async function main() {
-    prisma.user.deleteMany({})
-    // const user1 = await prisma.user.upsert({
-    //     where:{email: "a@b.com"},
-    //     update: {},
-    //     create: {
-    //         email: "a@b.com",
-    //         firstName:"Dave2",
-    //         lastName: "Dog2",
-    //         role: "FACULTY"
-    //     }
-    // })
 
-    // console.log({ user1 })
+
+async function main() {
+    // prisma.<table>.upsert updates data that matches the where clause
+
+    const user1 = await prisma.user.upsert({
+        where:{email: "a@b.com"},
+        update: {},
+        create: {
+            email: "a@b.com",
+            firstName:"Dave",
+            lastName: "Dog",
+            role: "FACULTY"
+        }
+    })
+
+    const user2 = await prisma.user.upsert({
+        where: {email: "a2@b.com"},
+        update: {},
+        create: {
+            email: "a2@b.com",
+            firstName: "Bob",
+            lastName: "Patel", 
+        }
+    })
+
+    const user3 = await prisma.user.upsert({
+        where: {email: "a3@b.com"},
+        update: {},
+        create: {
+            email: "a2@b.com",
+            firstName: "Roger",
+            lastName: "Wow",
+            preferredName: "Rob",
+            role: "FACULTY"
+        }
+    })
+
+    const user4 = await prisma.user.upsert({
+        where: {email: "a4@b.com"},
+        update: {},
+        create: {
+            email: "a4@b.com",
+            firstName: "Mark",
+            lastName: "Sivak",
+            preferredName: "Mark",
+            role: "MERIT_COMMITTEE_HEAD"
+        }
+    })
+
+    const user5 = await prisma.user.upsert({
+        where: {email: "a5@b.com"},
+        update: {},
+        create: {
+            email: "a4@b.com",
+            firstName: "Diego",
+            lastName: "Hernandez",
+            role: "MERIT_COMMITTEE_MEMBER"
+        }
+    })
+
+    const user6 = await prisma.user.upsert({
+        where: {email: "a6@b.com"},
+        update: {},
+        create: {
+            email: "a6@bb.com",
+            firstName: "Ben",
+            lastName: "Lerner",
+            preferredName: "Blerner",
+            role: "FACULTY"
+        }
+    })
+
+    const user7 = await prisma.user.upsert({
+        where: {email: "a7@b.com"},
+        update: {},
+        create: {
+            email: "a7@b.com",
+            firstName: "Christina",
+            lastName: "Long",
+            preferredName: "Hatsune Miku",
+            role: "MERIT_COMMITTEE_MEMBER"
+        }
+    })
+
+    const user8 = await prisma.user.upsert({
+        where: {email: "a8@b.com"},
+        update: {},
+        create: {
+            email: "a8@b.com",
+            firstName: "Jeffery",
+            lastName: "Hopkins",
+            preferredName: "Jeff",
+            role: "FACULTY"
+        }
+    })
+
+    const user9 = await prisma.user.upsert({
+        where: {email: "a9@b.com"},
+        update: {},
+        create: {
+            email: "a9@b.com",
+            firstName: "John",
+            lastName: "Appleseed",
+            role: "FACULTY"
+        }
+    })
+
+
+
+
+    console.log({ user1, user2, user3, user4, user5, user6, user7 })
     
 }
 
