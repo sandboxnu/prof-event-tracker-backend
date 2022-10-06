@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 @Controller()
 export class AppController {
@@ -14,19 +14,14 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get("test/deleteUsers")
+  @Get('test/deleteUsers')
   deleteUsers(): void {
-    prisma.user.deleteMany({})
-    .then(e => console.log(e))
+    prisma.user.deleteMany({}).then((e) => console.log(e));
   }
 
-  @Get("test/getAllUsers")
+  @Get('test/getAllUsers')
   getAllUsers() {
     // write using a Nest service, just there for testing now
-    return prisma.user.findMany()
+    return prisma.user.findMany();
   }
-
-
-
-
 }
