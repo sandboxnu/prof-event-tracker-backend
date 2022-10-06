@@ -143,10 +143,142 @@ async function main() {
         }
     })
 
+    const activity1 = await prisma.activity.upsert({
+        where: {id: 1},
+        update: {},
+        create: {
+            user: {
+                connect: {
+                    id: user1.id
+                }
+            },
+            academicYear: {
+                create: {
+                    startDate: new Date(),
+                    endDate: new Date()
+                }
+            },
+            date: new Date(),
+            name: "Taught Course",
+            description: "Led the the course intro to design, for over for 200 students",
+            category: "TEACHING",
+            significance: "MAJOR",
+            isFavorite: false
+
+        }
+
+    })
+
+
+    const activity2 = await prisma.activity.upsert({
+        where: {id: activity1.id + 1},
+        update: {},
+        create: {
+            user: {
+                connect: {
+                    id: user3.id
+                }
+            },
+            academicYear: {
+                create: {
+                    startDate: new Date('2020-04-20T21:23:57.736Z'),
+                    endDate: new Date('2021-04-20T21:23:57.736Z')
+                }
+            },
+            date: new Date('2020-11-20T21:23:57.736Z'),
+            name: "Client Project",
+            description: "completed the client design project for Autodesk",
+            category: "SERVICE",
+            significance: "SIGNIFICANT",
+            isFavorite: false
+
+        }
+
+    })
+
+    const activity3 = await prisma.activity.upsert({
+        where: {id: activity2.id + 1},
+        update: {},
+        create: {
+            user: {
+                connect: {
+                    id: user6.id
+                }
+            },
+            academicYear: {
+                create: {
+                    startDate: new Date('2022-07-20T21:23:57.736Z'),
+                    endDate: new Date('2023-06-20T21:23:57.736Z')
+                }
+            },
+            date: new Date('2022-11-20T21:23:57.736Z'),
+            name: "Directed Study",
+            description: "Animation simulation using Houdini",
+            category: "RESEARCH",
+            significance: "MINOR",
+            isFavorite: false
+
+        }
+
+    })
+
+    const activity4 = await prisma.activity.upsert({
+        where: {id: activity3.id + 1},
+        update: {},
+        create: {
+            user: {
+                connect: {
+                    id: user8.id
+                }
+            },
+            academicYear: {
+                create: {
+                    startDate: new Date('2022-07-20T21:23:57.736Z'),
+                    endDate: new Date('2023-06-20T21:23:57.736Z')
+                }
+            },
+            date: new Date('2022-08-20T21:23:57.736Z'),
+            name: "New Course",
+            description: "ARTG 5240",
+            category: "TEACHING",
+            significance: "MAJOR",
+            isFavorite: true
+
+        }
+
+    })
+
+    const activity5 = await prisma.activity.upsert({
+        where: {id: activity4.id + 1},
+        update: {},
+        create: {
+            user: {
+                connect: {
+                    id: user1.id
+                }
+            },
+            academicYear: {
+                create: {
+                    startDate: new Date('2022-07-20T21:23:57.736Z'),
+                    endDate: new Date('2023-06-20T21:23:57.736Z')
+                }
+            },
+            date: new Date('2022-10-20T21:23:57.736Z'),
+            name: "Field Trip",
+            description: "led a field trip to the MFA",
+            category: "TEACHING",
+            significance: "SIGNIFICANT",
+            isFavorite: false
+
+        }
+
+    })
 
 
 
-    console.log({ user1, user2, user3, user4, user5, user6, user7, user8, user9 })
+
+    console.log({ user1, user2, user3, user4, user5, user6, user7, user8, user9})
+    console.log({activity1, activity2, activity3, activity4, activity5})
     
 }
 
