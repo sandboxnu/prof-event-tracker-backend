@@ -13,15 +13,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @Get('test/deleteUsers')
-  deleteUsers(): void {
-    prisma.user.deleteMany({}).then((e) => console.log(e));
-  }
-
-  @Get('test/getAllUsers')
-  getAllUsers() {
-    // write using a Nest service, just there for testing now
-    return prisma.user.findMany();
-  }
 }
