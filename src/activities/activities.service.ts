@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ActivitiesService {
+  constructor(private prisma: PrismaService) {}
+
   create(createActivityDto: CreateActivityDto) {
+    // will need to check that the user making the request is the professor
     return 'This action adds a new activity';
   }
 
-  findAll() {
-    return `This action returns all activities`;
+  findAll(userId: number) {
+    // will need to check that the user making the request is either the professor or is on the MC
+    return this.prisma.activity.findMany({ where: { userId: userId } });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} activity`;
+    // will need to check that the user making the request is either the professor or is on the MC
+    return this.prisma.activity.findFirst({ where: { id: id } });
   }
 
   update(id: number, updateActivityDto: UpdateActivityDto) {
+    // will need to check that the user making the request is the professor
     return `This action updates a #${id} activity`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} activity`;
+    // will need to check that the user making the request is the professor
+    return this.prisma.activity.delete({ where: { id } });
   }
 }

@@ -15,14 +15,21 @@ import { UpdateActivityDto } from './dto/update-activity.dto';
 export class ActivitiesController {
   constructor(private readonly activitiesService: ActivitiesService) {}
 
+  // ROUTES:
+  // - [] Create an activity for a professor
+  // - [x] View the details of an activity
+  // - [] Update an activity
+  // - [x] Delete an activity
+  // - [x] Get list of all activitise for a professor
+
   @Post()
   create(@Body() createActivityDto: CreateActivityDto) {
     return this.activitiesService.create(createActivityDto);
   }
 
-  @Get()
-  findAll() {
-    return this.activitiesService.findAll();
+  @Get('all/:userId')
+  findAll(@Param('userId') userId: string) {
+    return this.activitiesService.findAll(+userId);
   }
 
   @Get(':id')
