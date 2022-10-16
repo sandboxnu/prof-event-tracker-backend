@@ -9,7 +9,7 @@ export class ActivitiesService {
 
   create(createActivityDto: CreateActivityDto) {
     // will need to check that the user making the request is the professor
-    return 'This action adds a new activity';
+    return this.prisma.activity.create({ data: createActivityDto });
   }
 
   findAll(userId: number) {
