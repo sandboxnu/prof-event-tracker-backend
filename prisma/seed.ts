@@ -217,6 +217,7 @@ async function createActivityData() {
     },
   });
 
+
   const activity5 = await prisma.activity.upsert({
     where: { id: activity4.id + 1 },
     update: {},
@@ -239,6 +240,53 @@ async function createActivityData() {
       isFavorite: false,
     },
   });
+
+  const activity6 = await prisma.activity.upsert({
+    where: { id: activity5.id + 1 },
+    update: {},
+    create: {
+      user: {
+        connect: {
+          email: 'a8@b.com',
+        },
+      },
+      academicYear: {
+        connect: {
+          id: 1,
+        },
+      },
+      date: new Date('2022-10-20T21:23:57.736Z'),
+      name: 'Led a minor teaching activity',
+      description: 'something that I will edit later',
+      category: 'TEACHING',
+      significance: 'MINOR',
+      isFavorite: false,
+    },
+  });
+
+  const activity7 = await prisma.activity.upsert({
+    where: { id: activity6.id + 1 },
+    update: {},
+    create: {
+      user: {
+        connect: {
+          email: 'a8@b.com',
+        },
+      },
+      academicYear: {
+        connect: {
+          id: 1,
+        },
+      },
+      date: new Date('2022-10-20T21:23:57.736Z'),
+      name: 'Cure cancer',
+      description: 'where is my money?',
+      category: 'RESEARCH',
+      significance: 'SIGNIFICANT',
+      isFavorite: true,
+    },
+  });
+
   console.log({ activity1, activity2, activity3, activity4, activity5 });
 }
 
