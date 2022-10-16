@@ -1,21 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {ActivityCategory, SignificanceLevel } from '@prisma/client';
 
-
-
 export class CreateActivityDto {
     @ApiProperty()
-    userId: string;
+    userId: number;
 
     @ApiProperty()
-    academicYearId: string;
+    academicYearId: number;
 
     @ApiProperty()
-    date: string;
-
+    date: Date;
 
     @ApiProperty()
-    name: boolean;
+    name: string;
 
     @ApiProperty()
     description: string;
@@ -28,8 +25,5 @@ export class CreateActivityDto {
 
     @ApiProperty()
     isFavorite: boolean;
-
-
-
 
 }
