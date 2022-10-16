@@ -10,17 +10,12 @@ import {
 import { ActivitiesService } from './activities.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('activities')
+@ApiTags('activities')
 export class ActivitiesController {
   constructor(private readonly activitiesService: ActivitiesService) {}
-
-  // ROUTES:
-  // - [] Create an activity for a professor
-  // - [x] View the details of an activity
-  // - [] Update an activity
-  // - [x] Delete an activity
-  // - [x] Get list of all activitise for a professor
 
   @Post()
   create(@Body() createActivityDto: CreateActivityDto) {
