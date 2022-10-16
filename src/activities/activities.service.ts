@@ -24,7 +24,10 @@ export class ActivitiesService {
 
   update(id: number, updateActivityDto: UpdateActivityDto) {
     // will need to check that the user making the request is the professor
-    return `This action updates a #${id} activity`;
+    return this.prisma.activity.update({
+      where: { id },
+      data: updateActivityDto,
+    });
   }
 
   remove(id: number) {
