@@ -25,9 +25,11 @@ export class ActivitiesController {
   }
 
   @Get('all/:userId')
-  findAll(@Param('userId') userId: string, 
+  findAll(
+    @Param('userId') userId: string,
     @Query('category') category?: ActivityCategory,
-    @Query('signifiance') signifiance?: SignificanceLevel) {
+    @Query('significance') signifiance?: SignificanceLevel,
+  ) {
     // + used to convert userId param into a number
     return this.activitiesService.findFilter(+userId, category, signifiance);
   }
