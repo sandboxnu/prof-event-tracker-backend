@@ -109,18 +109,6 @@ async function createUserData() {
       role: 'FACULTY',
     },
   });
-
-  console.log({
-    user1,
-    user2,
-    user3,
-    user4,
-    user5,
-    user6,
-    user7,
-    user8,
-    user9,
-  });
 }
 
 async function createActivityData() {
@@ -286,8 +274,6 @@ async function createActivityData() {
       isFavorite: true,
     },
   });
-
-  console.log({ activity1, activity2, activity3, activity4, activity5 });
 }
 
 async function createProfessorInfoData() {
@@ -360,8 +346,6 @@ async function createProfessorInfoData() {
         'Went on teaching release for Fall semester because of maternity leave',
     },
   });
-
-  console.log({ info1, info2, info3, info4 });
 }
 
 async function main() {
