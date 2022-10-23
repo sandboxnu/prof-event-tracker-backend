@@ -54,26 +54,6 @@ export class ActivitiesService {
     return result;
   }
 
-  find(
-    activityCatetory: ActivityCategory | undefined,
-    significanceLevel: SignificanceLevel | undefined,
-  ) {
-    if (activityCatetory === undefined) {
-      // do stuff
-    }
-  }
-
-  findByCategory(activityCatetory: ActivityCategory) {
-    return this.prisma.activity.findMany({
-      where: { category: activityCatetory },
-    });
-  }
-
-  findByLevel(significanceLevel: SignificanceLevel) {
-    return this.prisma.activity.findMany({
-      where: { significance: significanceLevel },
-    });
-  }
 
   findOne(id: number) {
     // will need to check that the user making the request is either the professor or is on the MC
