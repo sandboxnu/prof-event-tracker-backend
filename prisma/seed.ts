@@ -109,18 +109,6 @@ async function createUserData() {
       role: 'FACULTY',
     },
   });
-
-  console.log({
-    user1,
-    user2,
-    user3,
-    user4,
-    user5,
-    user6,
-    user7,
-    user8,
-    user9,
-  });
 }
 
 async function createActivityData() {
@@ -217,6 +205,7 @@ async function createActivityData() {
     },
   });
 
+
   const activity5 = await prisma.activity.upsert({
     where: { id: activity4.id + 1 },
     update: {},
@@ -239,7 +228,52 @@ async function createActivityData() {
       isFavorite: false,
     },
   });
-  console.log({ activity1, activity2, activity3, activity4, activity5 });
+
+  const activity6 = await prisma.activity.upsert({
+    where: { id: activity5.id + 1 },
+    update: {},
+    create: {
+      user: {
+        connect: {
+          email: 'a8@b.com',
+        },
+      },
+      academicYear: {
+        connect: {
+          id: 1,
+        },
+      },
+      date: new Date('2022-10-20T21:23:57.736Z'),
+      name: 'Led a minor teaching activity',
+      description: 'something that I will edit later',
+      category: 'TEACHING',
+      significance: 'MINOR',
+      isFavorite: false,
+    },
+  });
+
+  const activity7 = await prisma.activity.upsert({
+    where: { id: activity6.id + 1 },
+    update: {},
+    create: {
+      user: {
+        connect: {
+          email: 'a8@b.com',
+        },
+      },
+      academicYear: {
+        connect: {
+          id: 1,
+        },
+      },
+      date: new Date('2022-10-20T21:23:57.736Z'),
+      name: 'Cure cancer',
+      description: 'where is my money?',
+      category: 'RESEARCH',
+      significance: 'SIGNIFICANT',
+      isFavorite: true,
+    },
+  });
 }
 
 async function createProfessorInfoData() {
@@ -312,8 +346,6 @@ async function createProfessorInfoData() {
         'Went on teaching release for Fall semester because of maternity leave',
     },
   });
-
-  console.log({ info1, info2, info3, info4 });
 }
 
 async function main() {

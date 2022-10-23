@@ -2,6 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import {
+  Activity,
+  ActivityCategory,
+  PrismaPromise,
+  SignificanceLevel,
+} from '@prisma/client';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Injectable()
 export class ActivitiesService {
@@ -16,6 +23,37 @@ export class ActivitiesService {
     // will need to check that the user making the request is either the professor or is on the MC
     return this.prisma.activity.findMany({ where: { userId: userId } });
   }
+
+  findFilter(
+    userId: number,
+    category: ActivityCategory | undefined,
+    significance: SignificanceLevel | undefined,
+  ) {
+    let result: PrismaPromise<Activity[]>;
+
+    if (!significance) {
+      result = this.prisma.activity.findMany({
+        where: { userId: userId, category: category },
+      });
+    } else if (!category) {
+      result = this.prisma.activity.findMany({
+        where: { userId: userId, significance: significance },
+      });
+    } else if (!significance && !category) {
+      result = this.prisma.activity.findMany({ where: { userId: userId } });
+    } else {
+      result = this.prisma.activity.findMany({
+        where: {
+          userId: userId,
+          category: category,
+          significance: significance,
+        },
+      });
+    }
+
+    return result;
+  }
+
 
   findOne(id: number) {
     // will need to check that the user making the request is either the professor or is on the MC

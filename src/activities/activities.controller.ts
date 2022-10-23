@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ActivityCategory, SignificanceLevel } from '@prisma/client';
 
 @Controller('activities')
 @ApiTags('activities')
@@ -23,8 +25,13 @@ export class ActivitiesController {
   }
 
   @Get('all/:userId')
-  findAll(@Param('userId') userId: string) {
-    return this.activitiesService.findAll(+userId);
+  findAll(
+    @Param('userId') userId: string,
+    @Query('category') category?: ActivityCategory,
+    @Query('significance') signifiance?: SignificanceLevel,
+  ) {
+    // + used to convert userId param into a number
+    return this.activitiesService.findFilter(+userId, category, signifiance);
   }
 
   @Get(':id')
