@@ -37,7 +37,8 @@ export class AuthService {
   }
 
   async registerUser(userDto: RegisterUserDto) {
-    const newUser = await this.prisma.user.create({ data: userDto });
+    console.table(userDto);
+    const newUser = await this.prisma.user.create({ data: {email: userDto.email, firstName: userDto.firstName, lastName: userDto.lastName} });
     this.generateJwt({sub: newUser.id, email: newUser.email});
 
   }
