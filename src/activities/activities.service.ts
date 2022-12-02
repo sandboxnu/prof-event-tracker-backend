@@ -8,7 +8,6 @@ import {
   PrismaPromise,
   SignificanceLevel,
 } from '@prisma/client';
-import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Injectable()
 export class ActivitiesService {
@@ -53,7 +52,6 @@ export class ActivitiesService {
 
     return result;
   }
-
 
   findOne(id: number) {
     // will need to check that the user making the request is either the professor or is on the MC
