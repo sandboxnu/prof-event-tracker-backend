@@ -12,6 +12,10 @@ export class JwtAuthService {
       throw new BadRequestException('Unauthenticated');
     }
 
+    if(!(userDto.email.split("@")[1] === "husky.neu.edu")) {
+      throw new BadRequestException('Must use a NEU Google email');
+    }
+
     var user = await this.prisma.user.findFirst({
       where: { email: userDto.email },
     });
