@@ -15,7 +15,6 @@ export class ActivitiesService {
   constructor(private prisma: PrismaService) {}
 
   create(userId: number, createActivityDto: CreateActivityDto) {
-    console.log({ ...createActivityDto, userId: userId });
     return this.prisma.activity.create({
       data: { ...createActivityDto, userId: userId },
     });
