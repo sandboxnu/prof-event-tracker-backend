@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -6,6 +6,7 @@ import {
   Activity,
   ActivityCategory,
   PrismaPromise,
+  Role,
   SignificanceLevel,
 } from '@prisma/client';
 
@@ -13,37 +14,57 @@ import {
 export class ActivitiesService {
   constructor(private prisma: PrismaService) {}
 
-  create(createActivityDto: CreateActivityDto) {
-    // will need to check that the user making the request is the professor
-    return this.prisma.activity.create({ data: createActivityDto });
+  create(userId: number, createActivityDto: CreateActivityDto) {
+    console.log({ ...createActivityDto, userId: userId });
+    return this.prisma.activity.create({
+      data: { ...createActivityDto, userId: userId },
+    });
   }
 
-  findAll(userId: number) {
-    // will need to check that the user making the request is either the professor or is on the MC
-    return this.prisma.activity.findMany({ where: { userId: userId } });
-  }
-
-  findFilter(
-    userId: number,
+  async findFilter(
+    userMakingRequestId: number,
+    userId: string | undefined,
     category: ActivityCategory | undefined,
     significance: SignificanceLevel | undefined,
   ) {
     let result: PrismaPromise<Activity[]>;
+    var userToSearchId = userMakingRequestId;
+    // if a userId query parameter is provided, then it
+    // must be the same as the user making the request, or the user
+    // making the request must have admin permissions
+    if (userId) {
+      const userMakingRequest = await this.prisma.user.findFirst({
+        where: { id: userMakingRequestId },
+      });
+
+      if (
+        +userId !== userMakingRequestId &&
+        userMakingRequest &&
+        userMakingRequest.role === Role.FACULTY
+      ) {
+        throw new UnauthorizedException(
+          'You do not have permission to access these activites',
+        );
+      }
+      userToSearchId = +userId;
+    }
 
     if (!significance) {
       result = this.prisma.activity.findMany({
-        where: { userId: userId, category: category },
+        where: { userId: userToSearchId, category: category },
       });
     } else if (!category) {
       result = this.prisma.activity.findMany({
-        where: { userId: userId, significance: significance },
+        where: { userId: userToSearchId, significance: significance },
       });
     } else if (!significance && !category) {
-      result = this.prisma.activity.findMany({ where: { userId: userId } });
+      result = this.prisma.activity.findMany({
+        where: { userId: userToSearchId },
+      });
     } else {
       result = this.prisma.activity.findMany({
         where: {
-          userId: userId,
+          userId: userToSearchId,
           category: category,
           significance: significance,
         },
@@ -53,21 +74,55 @@ export class ActivitiesService {
     return result;
   }
 
-  findOne(id: number) {
-    // will need to check that the user making the request is either the professor or is on the MC
-    return this.prisma.activity.findFirst({ where: { id: id } });
+  async findOne(userId: number, activityId: number) {
+    const user = await this.prisma.user.findFirst({ where: { id: userId } });
+    const activity = await this.prisma.activity.findFirst({
+      where: { id: activityId },
+    });
+
+    if (
+      user &&
+      activity &&
+      activity.userId !== userId &&
+      user.role === Role.FACULTY
+    ) {
+      throw new UnauthorizedException(
+        'You do not have access to this activity',
+      );
+    }
+
+    return this.prisma.activity.findFirst({ where: { id: activityId } });
   }
 
-  update(id: number, updateActivityDto: UpdateActivityDto) {
-    // will need to check that the user making the request is the professor
+  async update(
+    userId: number,
+    activityId: number,
+    updateActivityDto: UpdateActivityDto,
+  ) {
+    const activity = await this.prisma.activity.findFirst({
+      where: { id: activityId },
+    });
+    if (activity && activity.userId !== userId) {
+      throw new UnauthorizedException(
+        'You do not have access to this activity',
+      );
+    }
+
     return this.prisma.activity.update({
-      where: { id },
+      where: { id: activityId },
       data: updateActivityDto,
     });
   }
 
-  remove(id: number) {
-    // will need to check that the user making the request is the professor
-    return this.prisma.activity.delete({ where: { id } });
+  async remove(userId: number, activityId: number) {
+    const activity = await this.prisma.activity.findFirst({
+      where: { id: activityId },
+    });
+    if (activity && activity.userId !== userId) {
+      throw new UnauthorizedException(
+        'You do not have access to this activity',
+      );
+    }
+    return this.prisma.activity.delete({ where: { id: activityId } });
   }
 }
