@@ -3,9 +3,6 @@ import { ActivityCategory, SignificanceLevel } from '@prisma/client';
 
 export class CreateActivityDto {
   @ApiProperty()
-  userId: number;
-
-  @ApiProperty()
   academicYearId: number;
 
   @ApiProperty()
