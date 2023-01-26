@@ -27,6 +27,7 @@ export class ActivitiesService {
     significance: SignificanceLevel | undefined,
   ) {
     let result: PrismaPromise<Activity[]>;
+    // eslint-disable-next-line no-var
     var userToSearchId = userMakingRequestId;
     // if a userId query parameter is provided, then it
     // must be the same as the user making the request, or the user

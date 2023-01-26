@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { NarrativeCategory, SignificanceLevel } from '@prisma/client';
 
-export class CreateNarrativesDto {
+export class CreateNarrativeDto {
   @ApiProperty()
   academicYearId: number;
 
