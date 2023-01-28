@@ -2,6 +2,13 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateNarrativeDto } from './dto/create-narrative.dto';
 import { UpdateNarrativeDto } from './dto/update-narrative.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import {
+  AcademicYear,
+  NarrativeCategory,
+  PrismaPromise,
+  Narrative,
+  Role,
+} from '@prisma/client';
 
 @Injectable()
 export class NarrativesService {
@@ -11,6 +18,46 @@ export class NarrativesService {
     return this.prisma.narrative.create({
       data: { ...createNarrativeDto, userId: userId },
     });
+  }
+
+  async findNarrative(
+    userId: number,
+    requestedId: number,
+    academicYear: AcademicYear,
+    category?: NarrativeCategory | undefined,
+  ) {
+    let result: PrismaPromise<Narrative[]>;
+
+    const user = await this.prisma.user.findFirst({ where: { id: userId } });
+    let userToSearchId = userId;
+
+    if (userId !== requestedId) {
+      if (user?.role === Role.FACULTY) {
+        throw new UnauthorizedException(
+          'You do not have permission to access these activites',
+        );
+      } else {
+        userToSearchId = requestedId;
+      }
+    }
+
+    if (category) {
+      result = this.prisma.narrative.findMany({
+        where: {
+          userId: userToSearchId,
+          category: category,
+          academicYear: academicYear,
+        },
+      });
+    } else {
+      result = this.prisma.narrative.findMany({
+        where: {
+          userId: userToSearchId,
+          academicYear: academicYear,
+        },
+      });
+    }
+    return result;
   }
 
   async update(
