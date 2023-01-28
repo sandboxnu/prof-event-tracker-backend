@@ -34,21 +34,13 @@ model ProfessorInfo {
   teachingReleaseExplanation String?
 }
 
-model AcademicYear {
-  id        Int         @id @default(autoincrement())
-  startDate DateTime
-  endDate   DateTime
-  Activity  Activity[]
-  Narrative Narrative[]
-}
 
 model Activity {
   id             Int               @id @default(autoincrement())
   user           User              @relation(fields: [userId], references: [id])
   userId         Int
-  academicYear   AcademicYear      @relation(fields: [academicYearId], references: [id])
-  academicYearId Int
-  date           DateTime
+  semester       Semester
+  date           DateTime?
   name           String
   description    String
   category       ActivityCategory
@@ -60,8 +52,8 @@ model Narrative {
   id             Int               @id @default(autoincrement())
   user           User              @relation(fields: [userId], references: [id])
   userId         Int
-  academicYear   AcademicYear      @relation(fields: [academicYearId], references: [id])
-  academicYearId Int
+  semester       Semester
+  date           DateTime?
   category       NarrativeCategory
   text           String
 }
@@ -97,3 +89,10 @@ enum SignificanceLevel {
   SIGNIFICANT
   MINOR
 }
+
+enum Semester {
+ FALL
+ SPRING
+ SUMMER1
+ SUMMER2
+ }
