@@ -3,6 +3,9 @@ import { ActivityCategory, SignificanceLevel, Semester} from '@prisma/client';
 
 export class CreateActivityDto {
   @ApiProperty()
+  year: number
+
+  @ApiProperty()
   semester: Semester
 
   @ApiProperty()
