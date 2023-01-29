@@ -163,7 +163,7 @@ async function createActivityData() {
         },
       },
       year: 2022,
-     semester: 'FALL',
+      semester: 'FALL',
       dateModified: new Date('2022-11-20T21:23:57.736Z'),
       name: 'Directed Study',
       description: 'Animation simulation using Houdini',
@@ -183,7 +183,7 @@ async function createActivityData() {
         },
       },
       year: 2023,
-      semester:'SUMMER2',
+      semester: 'SUMMER2',
       dateModified: new Date('2022-08-20T21:23:57.736Z'),
       name: 'New Course',
       description: 'ARTG 5240',
@@ -192,7 +192,6 @@ async function createActivityData() {
       isFavorite: true,
     },
   });
-
 
   const activity5 = await prisma.activity.upsert({
     where: { id: activity4.id + 1 },
@@ -327,10 +326,28 @@ async function createProfessorInfoData() {
   });
 }
 
+async function createNarrativeData() {
+  const narrative1 = await prisma.narrative.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      user: {
+        connect: {
+          id: 1,
+        },
+      },
+      year: 2022,
+      category: 'TEACHING',
+      text: 'i did this this year :D',
+    },
+  });
+}
+
 async function main() {
   await createUserData();
   await createActivityData();
   await createProfessorInfoData();
+  await createNarrativeData();
 }
 
 // execute the main function

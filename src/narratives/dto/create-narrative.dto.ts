@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { NarrativeCategory, SignificanceLevel } from '@prisma/client';
+import { NarrativeCategory } from '@prisma/client';
 
 export class CreateNarrativeDto {
   @ApiProperty()
-  academicYearId: number;
+  year: number;
 
   @ApiProperty()
   text: string;

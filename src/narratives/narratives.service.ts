@@ -3,7 +3,6 @@ import { CreateNarrativeDto } from './dto/create-narrative.dto';
 import { UpdateNarrativeDto } from './dto/update-narrative.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {
-  AcademicYear,
   NarrativeCategory,
   PrismaPromise,
   Narrative,
@@ -15,15 +14,20 @@ export class NarrativesService {
   constructor(private prisma: PrismaService) {}
 
   create(userId: number, createNarrativeDto: CreateNarrativeDto) {
+    const dateModified = new Date();
     return this.prisma.narrative.create({
-      data: { ...createNarrativeDto, userId: userId },
+      data: {
+        ...createNarrativeDto,
+        userId: userId,
+        dateModified: dateModified,
+      },
     });
   }
 
   async findNarrative(
     userId: number,
     requestedId: number,
-    academicYear: AcademicYear,
+    year: number,
     category?: NarrativeCategory | undefined,
   ) {
     let result: PrismaPromise<Narrative[]>;
@@ -46,14 +50,14 @@ export class NarrativesService {
         where: {
           userId: userToSearchId,
           category: category,
-          academicYear: academicYear,
+          year: year,
         },
       });
     } else {
       result = this.prisma.narrative.findMany({
         where: {
           userId: userToSearchId,
-          academicYear: academicYear,
+          year: year,
         },
       });
     }

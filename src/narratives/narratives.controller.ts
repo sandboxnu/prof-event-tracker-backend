@@ -15,7 +15,7 @@ import { CreateNarrativeDto } from './dto/create-narrative.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateNarrativeDto } from './dto/update-narrative.dto';
-import { NarrativeCategory, AcademicYear } from '@prisma/client';
+import { NarrativeCategory } from '@prisma/client';
 @Controller('narratives')
 @ApiTags('narratives')
 export class NarrativesController {
@@ -58,13 +58,13 @@ export class NarrativesController {
   findNarrative(
     @Req() req: any,
     @Query('userId') userId: number,
-    @Query('academicYear') academicYear: AcademicYear,
+    @Query('year') year: number,
     @Query('category') category: NarrativeCategory | undefined,
   ) {
     return this.narrativesService.findNarrative(
       req.user.sub,
       userId,
-      academicYear,
+      year,
       category,
     );
   }
