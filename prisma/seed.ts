@@ -121,12 +121,9 @@ async function createActivityData() {
           email: 'a@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date(),
+      year: 2023,
+      semester: 'FALL',
+      dateModified: new Date('2023-10-20T21:23:57.736Z'),
       name: 'Taught Course',
       description:
         'Led the the course intro to design, for over for 200 students',
@@ -145,12 +142,9 @@ async function createActivityData() {
           email: 'a3@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date('2020-11-20T21:23:57.736Z'),
+      year: 2020,
+      semester: 'FALL',
+      dateModified: new Date('2020-11-20T21:23:57.736Z'),
       name: 'Client Project',
       description: 'completed the client design project for Autodesk',
       category: 'SERVICE',
@@ -168,12 +162,9 @@ async function createActivityData() {
           email: 'a6@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date('2022-11-20T21:23:57.736Z'),
+      year: 2022,
+     semester: 'FALL',
+      dateModified: new Date('2022-11-20T21:23:57.736Z'),
       name: 'Directed Study',
       description: 'Animation simulation using Houdini',
       category: 'RESEARCH',
@@ -191,12 +182,9 @@ async function createActivityData() {
           email: 'a8@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date('2022-08-20T21:23:57.736Z'),
+      year: 2023,
+      semester:'SUMMER2',
+      dateModified: new Date('2022-08-20T21:23:57.736Z'),
       name: 'New Course',
       description: 'ARTG 5240',
       category: 'TEACHING',
@@ -215,12 +203,9 @@ async function createActivityData() {
           email: 'a@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date('2022-10-20T21:23:57.736Z'),
+      year: 2022,
+      semester: 'FALL',
+      dateModified: new Date('2022-10-20T21:23:57.736Z'),
       name: 'Field Trip',
       description: 'led a field trip to the MFA',
       category: 'TEACHING',
@@ -238,12 +223,9 @@ async function createActivityData() {
           email: 'a8@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date('2022-10-20T21:23:57.736Z'),
+      year: 2021,
+      semester: 'SPRING',
+      dateModified: new Date('2022-10-20T21:23:57.736Z'),
       name: 'Led a minor teaching activity',
       description: 'something that I will edit later',
       category: 'TEACHING',
@@ -261,12 +243,9 @@ async function createActivityData() {
           email: 'a8@b.com',
         },
       },
-      academicYear: {
-        connect: {
-          id: 1,
-        },
-      },
-      date: new Date('2022-10-20T21:23:57.736Z'),
+      year: 2022,
+      semester: 'SUMMER1',
+      dateModified: new Date('2022-10-20T21:23:57.736Z'),
       name: 'Cure cancer',
       description: 'where is my money?',
       category: 'RESEARCH',
@@ -349,14 +328,6 @@ async function createProfessorInfoData() {
 }
 
 async function main() {
-  await prisma.academicYear.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      startDate: new Date(),
-      endDate: new Date(),
-    },
-  });
   await createUserData();
   await createActivityData();
   await createProfessorInfoData();
