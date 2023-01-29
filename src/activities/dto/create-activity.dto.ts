@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ActivityCategory, SignificanceLevel } from '@prisma/client';
+import { ActivityCategory, SignificanceLevel, Semester} from '@prisma/client';
 
 export class CreateActivityDto {
   @ApiProperty()
-  academicYearId: number;
+  year: number
 
   @ApiProperty()
-  date: Date;
+  semester: Semester
 
   @ApiProperty()
   name: string;
