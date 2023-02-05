@@ -6,7 +6,7 @@ export class CreateActivityDto {
   year: number;
 
   @ApiProperty()
-  semester: Semester;
+  semester: Semester[];
 
   @ApiProperty()
   dateModified: Date;
