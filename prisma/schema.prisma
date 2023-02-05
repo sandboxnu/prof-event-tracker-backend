@@ -39,7 +39,7 @@ model Activity {
   user         User              @relation(fields: [userId], references: [id])
   userId       Int
   year         Int
-  semester     Semester
+  semester     Semester[]
   dateModified DateTime
   name         String
   description  String
@@ -93,6 +93,5 @@ enum SignificanceLevel {
 enum Semester {
   FALL
   SPRING
-  SUMMER1
-  SUMMER2
+  SUMMER
 }
